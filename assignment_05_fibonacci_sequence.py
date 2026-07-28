@@ -49,3 +49,88 @@
 # YOUR CODE BELOW — remove the # symbols from the scaffold and fill it in
 # =============================================================================
 
+"""Fibonacci Sequence Generator (iterative — no recursion)."""
+
+
+# -----------------------------------------------------------------------------
+# PART A — Print the first N terms
+# -----------------------------------------------------------------------------
+def generate_fibonacci(n):
+    """Return a list with the first n Fibonacci numbers, or None if n < 1."""
+    if n < 1:
+        return None
+    sequence = []
+    current, nxt = 0, 1
+    for _ in range(n):
+        sequence.append(current)
+        current, nxt = nxt, current + nxt
+    return sequence
+
+
+def print_fibonacci(n):
+    """Print the first n Fibonacci terms on one line."""
+    sequence = generate_fibonacci(n)
+    if sequence is None:
+        print("Error: N must be a positive integer.")
+        return
+    print("Fibonacci sequence:", " ".join(str(v) for v in sequence))
+
+
+# -----------------------------------------------------------------------------
+# PART B — Check membership in the sequence
+# -----------------------------------------------------------------------------
+def is_fibonacci(number):
+    """Return True if number appears in the Fibonacci sequence."""
+    if number < 0:
+        return False
+    current, nxt = 0, 1
+    while current < number:
+        current, nxt = nxt, current + nxt
+    return current == number
+
+
+def check_fibonacci(number):
+    """Print whether number is a Fibonacci number."""
+    if is_fibonacci(number):
+        print(f"{number} is a Fibonacci number.")
+    else:
+        print(f"{number} is NOT a Fibonacci number.")
+
+
+# -----------------------------------------------------------------------------
+# Menu
+# -----------------------------------------------------------------------------
+def main():
+    while True:
+        print("\n========= FIBONACCI SEQUENCE =========")
+        print("1. Print the first N terms")
+        print("2. Check if a number is a Fibonacci number")
+        print("3. Exit")
+        choice = input("Choose an option (1-3): ").strip()
+
+        if choice == "1":
+            try:
+                n = int(input("How many terms? "))
+            except ValueError:
+                print("Error: N must be a positive integer.")
+                continue
+            print_fibonacci(n)
+
+        elif choice == "2":
+            try:
+                number = int(input("Enter a number to check: "))
+            except ValueError:
+                print("Error: Please enter a valid whole number.")
+                continue
+            check_fibonacci(number)
+
+        elif choice == "3":
+            print("Goodbye!")
+            break
+
+        else:
+            print("Invalid choice. Please pick 1, 2 or 3.")
+
+
+if __name__ == "__main__":
+    main()
