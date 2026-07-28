@@ -39,3 +39,88 @@
 # YOUR CODE BELOW — remove the # symbols from the scaffold and fill it in
 # =============================================================================
 
+"""Array Statistics Calculator (no built-in sum/max/min)."""
+
+
+def calculate_sum(numbers):
+    """Return the sum of the list using a loop."""
+    total = 0
+    for value in numbers:
+        total += value
+    return total
+
+
+def calculate_average(numbers):
+    """Return the arithmetic mean of the list."""
+    if not numbers:
+        return None
+    count = 0
+    for _ in numbers:
+        count += 1
+    return calculate_sum(numbers) / count
+
+
+def find_maximum(numbers):
+    """Return the largest value in the list."""
+    if not numbers:
+        return None
+    largest = numbers[0]
+    for value in numbers:
+        if value > largest:
+            largest = value
+    return largest
+
+
+def find_minimum(numbers):
+    """Return the smallest value in the list."""
+    if not numbers:
+        return None
+    smallest = numbers[0]
+    for value in numbers:
+        if value < smallest:
+            smallest = value
+    return smallest
+
+
+def format_number(value):
+    """Print 5 instead of 5.0 for whole numbers."""
+    if isinstance(value, float) and value.is_integer():
+        return str(int(value))
+    return str(value)
+
+
+def read_numbers(n):
+    """Prompt the user for n numbers and return them as a list."""
+    numbers = []
+    for i in range(1, n + 1):
+        while True:
+            try:
+                numbers.append(float(input(f"Enter number {i}: ")))
+                break
+            except ValueError:
+                print("  Invalid input. Please enter a number.")
+    return numbers
+
+
+def main():
+    try:
+        n = int(input("How many numbers? "))
+    except ValueError:
+        print("Error: Please enter a valid whole number.")
+        return
+
+    if n <= 0:
+        print("Error: N must be a positive integer.")
+        return
+
+    numbers = read_numbers(n)
+
+    print("\nResults:")
+    print(f"Sum:     {format_number(calculate_sum(numbers))}")
+    print(f"Average: {round(calculate_average(numbers), 2)}")
+    print(f"Maximum: {format_number(find_maximum(numbers))}")
+    print(f"Minimum: {format_number(find_minimum(numbers))}")
+
+
+if __name__ == "__main__":
+    main()
