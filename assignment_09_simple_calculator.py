@@ -68,3 +68,124 @@
 # YOUR CODE BELOW — remove the # symbols from the scaffold and fill it in
 # =============================================================================
 
+"""Console-Based Simple Calculator."""
+
+
+# -----------------------------------------------------------------------------
+# Arithmetic operations
+# -----------------------------------------------------------------------------
+def add(a, b):
+    """Return a + b."""
+    return a + b
+
+
+def subtract(a, b):
+    """Return a - b."""
+    return a - b
+
+
+def multiply(a, b):
+    """Return a * b."""
+    return a * b
+
+
+def divide(a, b):
+    """Return a / b rounded to 2 decimals, or None if b is zero."""
+    if b == 0:
+        return None
+    return round(a / b, 2)
+
+
+def modulus(a, b):
+    """Return the remainder of a / b, or None if b is zero."""
+    if b == 0:
+        return None
+    return a % b
+
+
+def power(a, b):
+    """Return a raised to the power of b."""
+    return a ** b
+
+
+# -----------------------------------------------------------------------------
+# Helpers
+# -----------------------------------------------------------------------------
+def format_number(value):
+    """Show 13 instead of 13.0 for whole numbers."""
+    if isinstance(value, float) and value.is_integer():
+        return str(int(value))
+    return f"{value:g}"
+
+
+def read_number(prompt):
+    """Read a number from the user, re-prompting until valid."""
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("  Invalid input. Please enter a number.")
+
+
+def display_menu():
+    print("\n============================")
+    print("     SIMPLE CALCULATOR")
+    print("============================")
+    print("1. Addition")
+    print("2. Subtraction")
+    print("3. Multiplication")
+    print("4. Division")
+    print("5. Modulus")
+    print("6. Exponentiation")
+    print("7. Quit")
+
+
+# -----------------------------------------------------------------------------
+# Main loop
+# -----------------------------------------------------------------------------
+OPERATIONS = {
+    "1": ("+", add),
+    "2": ("-", subtract),
+    "3": ("*", multiply),
+    "4": ("/", divide),
+    "5": ("%", modulus),
+    "6": ("**", power),
+}
+
+
+def main():
+    while True:
+        display_menu()
+        choice = input("Select an operation (1-7): ").strip()
+
+        if choice == "7":
+            print("Goodbye!")
+            break
+
+        if choice not in OPERATIONS:
+            print("Invalid choice. Please select a number from 1 to 7.")
+            continue
+
+        symbol, operation = OPERATIONS[choice]
+        a = read_number("Enter first number : ")
+        b = read_number("Enter second number: ")
+
+        try:
+            result = operation(a, b)
+        except (OverflowError, ValueError):
+            print("Error: The result is too large or undefined.")
+            continue
+
+        if result is None:
+            if symbol == "/":
+                print("Error: Cannot divide by zero.")
+            else:
+                print("Error: Cannot take the modulus of zero.")
+            continue
+
+        print(f"Result: {format_number(a)} {symbol} {format_number(b)} "
+              f"= {format_number(result)}")
+
+
+if __name__ == "__main__":
+    main()
